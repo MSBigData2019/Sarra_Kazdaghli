@@ -14,11 +14,9 @@ def array_front9(nums):
     if len(nums) < 4:
         return False
     b = False
-    for elem in nums[4:]:
+    for elem in nums[:4]:
         if (elem == 9):
             b = True
-        else:
-            b = False
     return b
 
 
@@ -39,7 +37,6 @@ def occurences(text):
     dict = {}
     for i in [',']:
         text = text.replace(i, "")
-
     for word in text.split(" "):
         for alph in word:
             if (dict.get(alph) == -1):
@@ -60,10 +57,7 @@ def length_words(array):
 
 # Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-    list = []
-    while (number > 0):
-        number = number // 10
-        list.append(number)
+    list = [int(c) for c in str(number)]
     return list
 
 
@@ -71,9 +65,12 @@ def number2digits(number):
 # English is translated to Pig Latin by taking the first letter of every word,
 # moving it to the end of the word and adding 'ay'
 def pigLatin(text):
-    for word in text.split(" "):
-        word = word[1:] + word[0] + 'ay'
-        result = result + '  ' + word
+    list = text.split(" ")
+    new_word = list[0][1].upper() + list[0][2:] + list[0][0].lower() + 'ay'
+    result = new_word
+    for word in text.split(" ")[1:]:
+        new_word = word[1:] + word[0] + 'ay'
+        result = result + ' ' + new_word
     return result
 
 
