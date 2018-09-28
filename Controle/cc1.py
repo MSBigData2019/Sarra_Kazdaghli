@@ -26,7 +26,13 @@ def array_front9(nums):
 def last2(string):
     pattern = string[-2:]
     s = string[:len(string) - 2]
-    n = s.count(pattern)
+    if pattern[0] == pattern[1]:
+        n = s.count(pattern)
+        while (s.count(pattern[0]) != -1):
+            index = s.find(pattern[0])
+            n = n + s.count(pattern)
+    else:
+        n = s.count(pattern)
     return n
 
 
