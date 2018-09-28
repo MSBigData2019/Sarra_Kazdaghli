@@ -11,10 +11,14 @@ def string_times(string, n):
 # Given an array of ints, return True if one of the first 4 elements
 # in the array is a 9. The array length may be less than 4.
 def array_front9(nums):
-    longueur = min(len(nums) & 4)
+    if len(nums) < 4:
+        return False
     b = False
-    if (nums[:5].count(9) != -1):
-        b = True
+    for elem in nums[4:]:
+        if (elem == 9):
+            b = True
+        else:
+            b = False
     return b
 
 
@@ -25,7 +29,6 @@ def last2(string):
     pattern = string[-2:]
     s = string[:len(string) - 2]
     n = s.count(pattern)
-    print(n)
     return n
 
 
@@ -51,18 +54,17 @@ def occurences(text):
 def length_words(array):
     list = []
     for elem in array:
-        list = list + len(elem)
+        list.append(len(elem))
     return list
 
 
 # Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-    count = 0
+    list = []
     while (number > 0):
         number = number // 10
-        list = list.append(number)
-
-    return count
+        list.append(number)
+    return list
 
 
 # Write function that translates a text to Pig Latin and back.
