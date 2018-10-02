@@ -25,15 +25,12 @@ def array_front9(nums):
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
     pattern = string[-2:]
-    s = string[:len(string) - 2]
-    if pattern[0] == pattern[1]:
-        n = s.count(pattern)
-        while (s.count(pattern[0]) != -1):
-            index = s.find(pattern[0])
-            n = n + s.count(pattern)
-    else:
-        n = s.count(pattern)
-    return n
+    count = 0
+    new_string = string[:len(string) - 2]
+    for i in range(len(new_string)):
+        if new_string[i:i + 2] == pattern:
+            count += 1
+    return count
 
 
 # Write a proramm that returna dictionary of occurences of the alphabet for a given string.
