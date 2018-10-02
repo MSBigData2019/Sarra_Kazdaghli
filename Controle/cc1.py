@@ -127,7 +127,15 @@ response = {
 
 # Given the above response object extract a array of records with columns nombre_de_reservations , auteur and timestamp
 def flatten():
-    return
+    records = []
+    for elem in response.get("records"):
+        reservation_number = elem.get("fields").get("nombre_de_reservations")
+        author = elem.get("fields").get("auteur")
+        timestamp = elem.get("record_timestamp")
+        toadd = [reservation_number, author, timestamp]
+        records.append(toadd)
+    print(records)
+    return records
 
 
 # Here's our "unit tests".
@@ -160,7 +168,7 @@ class Lesson1Tests(unittest.TestCase):
     def testPigLatin(self):
         self.assertEqual(pigLatin("The quick brown fox"), "Hetay uickqay rownbay oxfay")
 
-
+    flatten()
 def main():
     unittest.main()
 
