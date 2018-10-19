@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import numpy as np
 import pandas as pd
 import json
+from threading import Thread
+import time
 
 
 def get_users():
@@ -25,24 +27,25 @@ def get_users():
 def get_stars(user):
     token = 'beaef5ccfed2a27f4fc4a4233fd5e9b891378547'
     # me = 'Sarah911'
-    urlAPI = 'https://api.github.com/users/' + user.split(" ")[0] + '/repos?per_page=10&page=2'
-    pageAPI = requests.get(urlAPI, headers={'Authentification': token})
+    urlAPI = 'https://api.github.com/users/' + user.split(" ")[0] + '/repos?per_page=100&page=1'
+    pageAPI = requests.get(urlAPI, headers={'Authorization': 'token {}'.format(token)})
     index = df.index[df['User'] == user][0]
+    i = 1
+
     if pageAPI.status_code == 200:
         json_text = json.loads(pageAPI.text)
         star_count = 0
         for text in json_text:
             star_count += int(text['stargazers_count'])
         if (len(json_text) == 0):
-            df['Stars'][index] = 0
+            df.loc[index, 'Stars'] = 0
         else:
-            df['Stars'][index] = star_count / len(json_text)
-    else:
-        print('The code error is ' + str(pageAPI.status_code))
+            df.loc[index, 'Stars'] = star_count / len(json_text)
+        i = i + 1
 
 
 df = get_users()
 for user in df['User']:
     get_stars(user)
-df.sort_values(by=['Stars'])
+df = df.sort_values(by=['Stars'], ascending=False)
 print(df.head())
