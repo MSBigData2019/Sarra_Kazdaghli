@@ -29,9 +29,15 @@ def get_stars(user):
     # me = 'Sarah911'
     urlAPI = 'https://api.github.com/users/' + user.split(" ")[0] + '/repos?per_page=100&page=1'
     pageAPI = requests.get(urlAPI, headers={'Authorization': 'token {}'.format(token)})
+    link = pageAPI.headers.get('link', None)
+    if link:
+        link = link.replace('>; rel = "last', '')
+        # final_page = link[-1:]
+        # print('final page is ', link)
+    else:
+        final_page = 0
     index = df.index[df['User'] == user][0]
     i = 1
-
     if pageAPI.status_code == 200:
         json_text = json.loads(pageAPI.text)
         star_count = 0
