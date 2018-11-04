@@ -21,17 +21,35 @@ if villes:
     print(df.head())
 
 # enter your api key here
-api_key = 'AIzaSyAtnNffeavyAuEHW5k8ThcwvFvinsrNB_8'
+api_key = 'AIzaSyCgW3B5fFOPrztmBmHZOeZc0dmlmrsLCq0'
 
 url = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
 
-urls = url + 'origins= {} &destinations= {} &key=' + api_key
-villes = '|'.join(df['Commune'].values)
-print(villes)
+urls = url + '&origins={}&destinations={}&key=' + api_key
+villes = '|'.join(df['Commune'].values[:10])
+
 url_formatted = urls.format(villes, villes)
 print(url_formatted)
 
 pageAPI = requests.get(url_formatted)
 if pageAPI.status_code:
     res = pageAPI.json()
-    print(res)
+
+df_matrix = pd.DataFrame(index=np.arange(10), columns=np.arange(10))
+i = 0
+for row in res['rows']:
+    elements = row['elements']
+    j = 0
+    for element in elements:
+        status = element['status']
+        if status == 'OK':
+            distance = element['distance']['text']
+        else:
+            distance = 'NaN'
+        df_matrix[i][j] = distance
+        j = j + 1
+    i = i + 1
+
+df_matrix = df_matrix.rename(lambda x: df['Commune'].values[int(x)], axis=1)
+df_matrix = df_matrix.rename(lambda x: df['Commune'].values[int(x)], axis=0)
+print(df_matrix.head())
