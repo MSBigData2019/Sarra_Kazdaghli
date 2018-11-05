@@ -5,5 +5,5 @@ Préparation globale : https://www.analyticsvidhya.com/blog/2016/09/how-to-prepa
 Feature engineering : https://jakevdp.github.io/PythonDataScienceHandbook/05.04-feature-engineering.html
 
 hackathon_malwares:
-https://www.youtube.com/watch?v=iMu1hlMvddg
+
 
