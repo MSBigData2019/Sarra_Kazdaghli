@@ -1,1 +1,7 @@
 Repository for Spark TP
+
+This folder contains:
+- build.sbt
+- src files 
+- project/plugins.sbt
+- prepared_trainingset
