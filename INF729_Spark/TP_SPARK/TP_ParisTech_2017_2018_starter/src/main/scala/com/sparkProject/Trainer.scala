@@ -74,11 +74,13 @@ object Trainer {
     val indexer = new StringIndexer()
       .setInputCol("country2")
       .setOutputCol("country_indexed")
+      .setHandleInvalid("skip")
 
 
     val indexer2 = new StringIndexer()
       .setInputCol("currency2")
       .setOutputCol("currency_indexed")
+      .setHandleInvalid("skip")
 
     // Encodes a column of category to a column of binary vectors (the sum of vectors equals 1)
     val encoder = new OneHotEncoder()
@@ -110,11 +112,11 @@ object Trainer {
       .setStages(Array(tokenizer, remover, cvModel, idf, indexer, indexer2, encoder, encoder2, assembler, lr))
 
     // Fit the pipeline
-    //val model = pipeline.fit(data)
+    val model = pipeline.fit(data)
 
-    //val rescaledData = model.transform(data)
+    val rescaledData = model.transform(data)
 
-    //rescaledData.select("features", "raw predictions", "probability", "predictions").show(10)
+    rescaledData.select("features", "raw_predictions", "probability", "predictions").show(10)
 
     // Random split data into testing and training
     val splits = data.randomSplit(Array(0.9, 0.1))
@@ -153,7 +155,7 @@ object Trainer {
 
     df_WithPredictions.groupBy("final_status", "predictions").count().show()
 
-    pipelineFitModel.write.save("Best Model")
+    pipelineFitModel.write.overwrite().save("Best Model")
 
   }
 
