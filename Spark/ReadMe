@@ -5,3 +5,14 @@ This folder contains:
 - src files 
 - project/plugins.sbt
 - prepared_trainingset
+
+
+(Le f1 score est,0.6552172571769757)                                            
++------------+-----------+-----+                                                
+|final_status|predictions|count|
++------------+-----------+-----+
+|           1|        0.0|  972|
+|           0|        1.0| 2846|
+|           1|        1.0| 2382|
+|           0|        0.0| 4477|
++------------+-----------+-----+
